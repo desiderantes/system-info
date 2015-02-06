@@ -1,0 +1,4 @@
+data.desktop {
+    xdg-desktop-files = system-info.desktop
+    gettext-domain = system-info
+}

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=System Information
+Comment=System Information Reporter
+GenericName=Information and Performance
+Exec=system-info
+Icon=application-default-icon
+Terminal=false
+Categories=Development;
+X-GNOME-Gettext-Domain=system-info
+Name[es]=Información del sistema

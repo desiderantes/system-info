@@ -1,0 +1,5 @@
+project {
+	name = system-info 
+	version = 0.1
+	minimum-bake-version = 0.1.33
+}

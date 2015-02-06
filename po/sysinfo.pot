@@ -1,0 +1,18 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: window.vala:61
+msgid "Export report"
+msgstr ""
+
+#: sysinfo.desktop:4
+msgid "Sysinfo"
+msgstr ""
+
+#: sysinfo.desktop:5
+msgid "Sysinfo comment"
+msgstr ""
+
+#: sysinfo.desktop:6
+msgid "Information and Performance"
+msgstr ""

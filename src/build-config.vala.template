@@ -1,0 +1,16 @@
+
+namespace Build {
+	public const string GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";
+	public const string DATADIR = "@DATADIR@";
+	public const string PACKAGE_DATA_DIR = "@PACKAGE_DATA_DIR@";
+	public const string RELEASE_NAME = "@RELEASE_NAME@";
+	public const string VERSION = "@VERSION@";
+	public const string VERSION_INFO= "@VERSION_INFO@";
+	public const string PROGRAM_NAME = "@PROGRAM_NAME@";
+	public const string EXEC_NAME = "@EXEC_NAME@";
+	public const string COPYRIGHT_YEARS = "@COPYRIGHT_YEARS@";
+	public const string MAIN_URL = "@MAIN_URL@";
+	public const string BUG_URL = "@BUG_URL@";
+	public const string HELP_URL = "@HELP_URL@";
+	public const string TRANSLATE_URL = "@TRANSLATE_URL@";
+}
