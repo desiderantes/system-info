@@ -1,3 +1,20 @@
+/*
+ * main.vala
+ * Copyright (C) 2015 Mario Daniel Ruiz Saavedra <desiderantes@rocketmail.com>
+ * 
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 using GLib;
 using Gtk;
 using Granite;
@@ -10,11 +27,10 @@ namespace SystemInfo{
 		public static string config_file = "";
 		public Window window;
 		public static const OptionEntry[] entries = {
-			{ "config-file", 'c', 0, OptionArg.STRING,
-				ref config_file,
-				"Uses a different config file", "CONFIG_FILE"},
+			{ "config-file", 'c', 0, OptionArg.STRING, ref config_file,
+				_("Uses a different config file"), "CONFIG_FILE"},
 			{ "version", 'v', 0, OptionArg.NONE, ref version,
-				"Display version number", null },
+				_("Display version number"), null },
 			{null}//Obligatory null terminator for this kind of list
 		};
 		construct {
@@ -51,8 +67,9 @@ namespace SystemInfo{
 		}
 		public static int main(string[] args){
 			if (!Thread.supported()) {
-        		GLib.error("Cannot run without thread support.\n");
-        	}
+				GLib.error("Cannot run without thread support.\n");
+			}
+			GLib.Intl.set_locale();
 			Gtk.init(ref args);
 			var app = new Application();
 			return app.run(args);

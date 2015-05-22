@@ -1,23 +1,20 @@
 templates.system-info{
 
-    files = build-config.vala
+    files = build-config.vala \
             
     variables = @DATADIR@=$(options.data-directory) \
                 @PACKAGE_DATA_DIR@=$(options.project-data-directory) \
                 @GETTEXT_PACKAGE@=system-info \
                 @RELEASE_NAME@=system-info \
-                @VERSION_INFO@=Information and Performance. \
                 @VERSION@=$(project.version) \
-                @PROGRAM_NAME@=System Information \
                 @EXEC_NAME@=system-info \
-                @COPYRIGHT_YEARS@ =2015 \
+                @COPYRIGHT_YEARS@=2015 \
                 @MAIN_URL@=https://launchpad.net/system-info \
                 @BUG_URL@=https://bugs.launchpad.net/system-info \
                 @HELP_URL@=https://answers.launchpad.net/system-info \
                 @TRANSLATE_URL@=https://translations.launchpad.net/system-info \ 
 
 }
-
 programs.system-info {
 
 	sources =	main.vala \
