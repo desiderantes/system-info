@@ -23,9 +23,9 @@ programs.system-info {
 				datablock.vala \
 
 	packages =	gthread-2.0 \
-				glib-2.0 >= 2.38.0 \
+				glib-2.0 >= 2.42.0 \
 				gio-2.0 >= 2.28.0 \
-				gtk+-3.0 >= 3.12.0 \
+				gtk+-3.0 >= 3.14.0 \
 				gee-0.8 >= 0.8.0 \
 				granite \
 
@@ -40,6 +40,6 @@ programs.system-info {
 
 	compile-flags = -DGETTEXT_PACKAGE=\"system-info\"
 
-	vala-compile-flags = --pkg gio-2.0 --target-glib=2.38 --thread --enable-checking --debug --enable-experimental --verbose --fatal-warnings
+	vala-compile-flags = --pkg gio-2.0 --target-glib=2.42 --thread --enable-checking --debug --enable-experimental --verbose --fatal-warnings
 	
 }

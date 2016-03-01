@@ -1,0 +1,24 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">system-info</name>
+  <shortdesc xml:lang="en">A Gtk+ System Information reporter written in Vala</shortdesc>
+  <description>System Information is a simple tool designed to provide complete information about what's inside your PC</description>
+  <homepage rdf:resource="https://github.com/desiderantes/system-info" />
+  <mailing-list rdf:resource="https://github.com/desiderantes/system-info" />
+  <download-page rdf:resource="https://github.com/desiderantes/system-info" />
+  <bug-database rdf:resource="https://github.com/desiderantes/system-info/issues" />
+  <category rdf:resource="http://api.gnome.org/doap-extensions#desktop" />
+  <programming-language>Vala</programming-language>
+  <programming-language>C</programming-language>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Mario Daniel Ruiz Saavedra</foaf:name>
+      <gnome:userid>desiderantes</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
