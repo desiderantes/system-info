@@ -82,7 +82,6 @@ namespace SystemInfo{
 		
 		public CPU(){
 			name = _("CPU");
-			datablock = new Datablock();
 			cpu_parser = new CPUParser(this);
 		}		
 		

@@ -19,13 +19,13 @@ using GLib;
 using Gtk;
 using Granite;
 
-namespace SystemInfo{
-	public class Window : Gtk.ApplicationWindow{
+namespace SystemInfo {
+	public class MainWindow : Gtk.ApplicationWindow {
 		public Gtk.HeaderBar header_bar { get; private set; }
 		public Gtk.Button save_button { get; private set; }
 		public Gtk.MenuButton app_menu { get; private set; }
 		private Gtk.Paned paned;
-		private CardBox general_box;
+		/*private CardBox general_box;
 		private CardBox cpu_box;
 		private CardBox motherboard_box;
 		private CardBox ram_box;
@@ -34,87 +34,89 @@ namespace SystemInfo{
 		private CardBox audio_box;
 		private CardBox storage_box;
 		private CardBox network_box;
-			
+		private List<Module> module_list;
+		*/	
+		private Granite.Widgets.SourceList source_list;
 		private Gtk.MenuItem preferences_menu_item;
 		private Gtk.Popover menu_popover;
 		private Gtk.Revealer content_revealer;
-		private List<Module> module_list;
-		public Window(SystemInfo.Application app){
-			Object(application: app);
+		
+		public MainWindow (SystemInfo.Application app) {
+			Object (application: app);
 			this.window_position = Gtk.WindowPosition.CENTER;
-			this.destroy.connect(Gtk.main_quit);
-			setup_ui(app);
+			this.destroy.connect (Gtk.main_quit);
+			setup_ui (app);
 		}
 		
-		public void setup_ui(Application app){
+		public void setup_ui (Application app){
 			// configure window
             width_request = 800;
             height_request = 600;
             
-			content_revealer = new Gtk.Revealer();
-			content_revealer.set_transition_duration(0);
-			content_revealer.set_transition_type(Gtk.RevealerTransitionType.CROSSFADE);
+			content_revealer = new Gtk.Revealer ();
+			content_revealer.set_transition_duration (0);
+			content_revealer.set_transition_type (Gtk.RevealerTransitionType.CROSSFADE);
 		
 			// Menus
-			app_menu = new Gtk.MenuButton();
-			preferences_menu_item = new Gtk.MenuItem.with_label("Preferences");
+			app_menu = new Gtk.MenuButton ();
+			preferences_menu_item = new Gtk.MenuItem.with_label ("Preferences");
 
-			var menu_icon = new Gtk.Image.from_icon_name("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
-			app_menu.set_image(menu_icon);
-			menu_popover = new Gtk.Popover.from_model(app_menu, app.app_menu);
+			var menu_icon = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
+			app_menu.set_image (menu_icon);
+			menu_popover = new Gtk.Popover.from_model (app_menu, app.app_menu);
 			app_menu.popover = menu_popover;
 
 			// main paned widget
-			paned = new Gtk.Paned(Gtk.Orientation.HORIZONTAL);
+			paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
 			paned.position_set = true;
 			this.add (paned);
-			setup_sourcelist();
-			paned.pack1(source_list, true, false);
-			paned.pack2(content_revealer, true, false);
+			setup_sourcelist ();
+			paned.pack1 (source_list, true, false);
+			paned.pack2 (content_revealer, true, false);
 			
 			// header bar
-			header_bar = new Gtk.HeaderBar();
+			header_bar = new Gtk.HeaderBar ();
 			header_bar.show_close_button = true;
 			header_bar.title = Build.PROGRAM_NAME;
-			set_titlebar(header_bar);
-			header_bar.pack_end(app_menu);
+			set_titlebar (header_bar);
+			header_bar.pack_end (app_menu);
 			
 			// save button
-			save_button = new Gtk.Button.from_icon_name("document-save", Gtk.IconSize.LARGE_TOOLBAR);
+			save_button = new Gtk.Button.from_icon_name ("document-save", Gtk.IconSize.LARGE_TOOLBAR);
 			save_button.tooltip_text =_("Save report");
-			header_bar.pack_end(save_button);
-			header_bar.show_all();
+			header_bar.pack_end (save_button);
+			header_bar.show_all ();
 		}
 		
-		public void setup_car(){
-			var system_category = new Granite.Widgets.SourceList.ExpandableItem(_("System"));
+		public void setup_sourcelist () {
+			var system_category = new Granite.Widgets.SourceList.ExpandableItem (_("System"));
 			//var benchmark_category = new Granite.Widgets.SourceList.ExpandableItem(_("Benchmark"));
-			general_item = new Granite.Widgets.SourceList.Item(_("General"));
-			cpu_item = new Granite.Widgets.SourceList.Item(_("Processor"));
-			motherboard_item = new Granite.Widgets.SourceList.Item(_("Motherboard"));
-			ram_item = new Granite.Widgets.SourceList.Item(_("RAM"));
-			peripherals_item = new Granite.Widgets.SourceList.Item(_("Peripherals"));
-			graphics_item = new Granite.Widgets.SourceList.Item(_("Graphics"));
-			audio_item = new Granite.Widgets.SourceList.Item(_("Audio"));
-			storage_item = new Granite.Widgets.SourceList.Item(_("Storage"));
-			network_item = new Granite.Widgets.SourceList.Item(_("Network"));
+			var general_item = new Granite.Widgets.SourceList.Item (_("General"));
+			var cpu_item = new Granite.Widgets.SourceList.Item (_("Processor"));
+			var motherboard_item = new Granite.Widgets.SourceList.Item (_("Motherboard"));
+			var ram_item = new Granite.Widgets.SourceList.Item (_("RAM"));
+			var peripherals_item = new Granite.Widgets.SourceList.Item (_("Peripherals"));
+			var graphics_item = new Granite.Widgets.SourceList.Item (_("Graphics"));
+			var audio_item = new Granite.Widgets.SourceList.Item (_("Audio"));
+			var storage_item = new Granite.Widgets.SourceList.Item (_("Storage"));
+			var network_item = new Granite.Widgets.SourceList.Item (_("Network"));
 			
-			system_category.add(general_item);
-			system_category.add(cpu_item);
-			system_category.add(motherboard_item);
-			system_category.add(ram_item);
-			system_category.add(peripherals_item);
-			system_category.add(graphics_item);
-			system_category.add(audio_item);
-			system_category.add(storage_item);
-			system_category.add(network_item);
+			system_category.add (general_item);
+			system_category.add (cpu_item);
+			system_category.add (motherboard_item);
+			system_category.add (ram_item);
+			system_category.add (peripherals_item);
+			system_category.add (graphics_item);
+			system_category.add (audio_item);
+			system_category.add (storage_item);
+			system_category.add (network_item);
 			
 			system_category.expanded = false;
-			source_list = new Granite.Widgets.SourceList();
+			source_list = new Granite.Widgets.SourceList ();
 			
 			var root = source_list.root;
 			root.add(system_category);
-			source_list.item_selected.connect((item)=>{
+			/*source_list.item_selected.connect((item)=>{
 				if (item != null){
 					switch (item){
 						case general_item:
@@ -122,7 +124,9 @@ namespace SystemInfo{
 					
 					}
 				}
-			});
+			});*/
+
+
 //			root.add(benchmark_category);
 		}
 		

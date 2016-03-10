@@ -20,19 +20,41 @@ using Gtk;
 using Granite;
 
 namespace SystemInfo{
+	public class Options : Object {
+		public OptionContext opt_context;
+		public bool version = false;
+		[CCode (array_length = false, array_null_terminated = true)]
+		public string? config_file = null;
+		public Window window;
+		public OptionEntry entries[3];
+		public Options(){
+			version = false;
+			entries[0] = { "config-file", 'c', 0, OptionArg.STRING, ref config_file,
+				_("Uses a different config file"), "CONFIG_FILE"};
+			entries[1] = { "version", 0, 0, OptionArg.NONE, ref version,
+						   _("Display version number"), null };
+			entries[2] = {null};
+
+			opt_context = new OptionContext (Build.PROGRAM_NAME);
+			opt_context.set_help_enabled (true);
+			opt_context.add_main_entries (entries, Build.RELEASE_NAME);
+			opt_context.add_group( Gtk.get_option_group(true) );
+		}
+		public void parse(string[] args) throws OptionError {
+			try {
+				opt_context.parse(ref args);
+			} catch(OptionError e){
+				throw e;
+			}
+		}
+	}
+
+
 	public class Application : Granite.Application{
 	
-		public OptionContext opt_context;
-		public static bool version = false;
-		public static string config_file = "";
-		public Window window;
-		public static const OptionEntry[] entries = {
-			{ "config-file", 'c', 0, OptionArg.STRING, ref config_file,
-				_("Uses a different config file"), "CONFIG_FILE"},
-			{ "version", 'v', 0, OptionArg.NONE, ref version,
-				_("Display version number"), null },
-			{null}//Obligatory null terminator for this kind of list
-		};
+		public Options opts;
+		public MainWindow window;
+		
 		construct {
 			// App info
 			build_data_dir = Build.DATADIR;
@@ -48,7 +70,7 @@ namespace SystemInfo{
 			application_id = "org.system-info";
 			app_icon = "accessories-calculator";
 			app_launcher = "system-info.desktop";
-			app_years = "2015";
+			app_years = Build.COPYRIGHT_YEARS;
 
 			main_url = Build.MAIN_URL;
 			bug_url = Build.BUG_URL;
@@ -60,19 +82,58 @@ namespace SystemInfo{
 			about_license_type = Gtk.License.GPL_3_0;
 			
 		}
-		protected override void activate() {
-			this.window = new SystemInfo.Window(this);
-			window.show_all();
-			window.destroy.connect(Gtk.main_quit);
+
+		protected override void startup() {
+
+			var action = new GLib.SimpleAction ("quit", null);
+			action.activate.connect (quit);
+			add_action (action);
+			add_accelerator ("<Ctrl>Q", "app.quit", null);
+			action = new GLib.SimpleAction ("generate-report", null);
+			// action.activate.connect ();
+			add_action (action);
+			add_accelerator ("<Ctrl>E", "app.generate-report", null);
+			base.startup();
 		}
-		public static int main(string[] args){
-			if (!Thread.supported()) {
-				GLib.error("Cannot run without thread support.\n");
+		protected override void activate() {
+			hold();
+			if(window == null) {
+				this.window = new MainWindow (this);
+				window.destroy.connect (Gtk.main_quit);
 			}
-			GLib.Intl.set_locale();
+			window.present();
+			release();
+		}
+
+		public static int main (string[] args){
+			if (!Thread.supported ()) {
+				GLib.error ("Cannot run without thread support.\n");
+			}
+			GLib.Intl.textdomain(Build.GETTEXT_PACKAGE);
+			GLib.Intl.setlocale ();
+			Environment.set_application_name(Build.EXEC_NAME);
+			MainLoop loop = new MainLoop();
 			Gtk.init(ref args);
-			var app = new Application();
-			return app.run(args);
+			// Gst.init(ref args);
+			Options opts = new Options();
+			try {
+				opts.parse (args);
+			} catch (OptionError e) {
+				stdout.printf ("error: %s\n", e.message);
+				stdout.printf (
+					_("Run '%s --help' to see a full list of available command line options.\n"),
+					Build.EXEC_NAME);
+				return 0;
+			}
+
+			if (opts.version) {
+				stdout.printf("%s (%s) - a System Report Utility", Build.VERSION_INFO,  Build.VERSION);
+				stdout.printf("Copyright © %s authors, see AUTHORS file for a complete list", Build.PROGRAM_NAME);
+				return 0;
+			}
+			var app = new Application ();
+			loop.run();
+			return app.run (args);
 		}
 	
 	}
