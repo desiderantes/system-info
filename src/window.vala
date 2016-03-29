@@ -90,7 +90,7 @@ namespace SystemInfo {
 		
 		public void setup_sourcelist () {
 			var system_category = new Granite.Widgets.SourceList.ExpandableItem (_("System"));
-			//var benchmark_category = new Granite.Widgets.SourceList.ExpandableItem(_("Benchmark"));
+			var benchmark_category = new Granite.Widgets.SourceList.ExpandableItem(_("Benchmark"));
 			var general_item = new Granite.Widgets.SourceList.Item (_("General"));
 			var cpu_item = new Granite.Widgets.SourceList.Item (_("Processor"));
 			var motherboard_item = new Granite.Widgets.SourceList.Item (_("Motherboard"));
@@ -116,6 +116,7 @@ namespace SystemInfo {
 			
 			var root = source_list.root;
 			root.add(system_category);
+			root.add(benchmark_category);
 			/*source_list.item_selected.connect((item)=>{
 				if (item != null){
 					switch (item){
